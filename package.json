@@ -1,0 +1,32 @@
+{
+  "name": "microservice-lab",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "pm2 --no-daemon start pm2.yml",
+    "dredd": "dredd swagger.yml http://localhost:${APPLICATION_PORT} --server 'node dist/index.js'",
+    "migrate": "knex migrate:latest --knexfile dist/knexfile.js",
+    "seed": "knex seed:run --knexfile dist/knexfile.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "knex": "^0.11.10",
+    "pg": "^6.1.0",
+    "pm2": "^1.1.3",
+    "swagger-express-middleware": "^1.0.0-alpha.12"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-data": "^1.2.1",
+    "gulp-shell": "^0.5.2",
+    "mocha": "^3.0.2",
+    "require-dir": "^0.3.0",
+    "typson": "^0.6.0",
+    "yamljs": "^0.2.8"
+  }
+}

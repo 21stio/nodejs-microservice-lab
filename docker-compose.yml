@@ -1,0 +1,43 @@
+version: '2'
+services:
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=username
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=database
+  base:
+    build: .
+    image: mircoservice-lab_node:latest
+    environment:
+      - APPLICATION_PORT=9000
+      - DATABASE_CLIENT=pg
+      - DATABASE_HOST=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_DATABASE=database
+      - DATABASE_USERNAME=username
+      - DATABASE_PASSWORD=password
+    volumes:
+      - .:/opt/microservice-lab
+  watch:
+    extends: base
+    ports:
+      - 9000:9000
+    command: npm run watch
+    links:
+      - postgres:postgres
+  test:
+    extends: base
+    command: npm run dredd
+    links:
+      - postgres:postgres
+  codegen:
+    build:
+      context: .
+      dockerfile: SwaggerCodegen.Dockerfile
+    image: mircoservice-lab_swagger-codegen:latest
+    command: java -jar swagger-codegen-cli.jar generate -i /opt/microservice-lab/swagger.yml -l typescript-fetch -o /opt/microservice-lab/sdk
+    volumes:
+      - .:/opt/microservice-lab

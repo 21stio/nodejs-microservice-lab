@@ -1,0 +1,11 @@
+apps:
+  - script   : ./dist/index.js
+    name     : application
+    instances: 1
+    watch:
+      - dist
+      - swagger.yml
+      - swagger-definitions.yml
+    watch_options:
+      usePolling: true
+      interval: 1000
