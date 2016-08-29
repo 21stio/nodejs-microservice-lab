@@ -8,9 +8,13 @@ services:
       - POSTGRES_USER=username
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=database
+  zipkin:
+    image: openzipkin/zipkin:latest
+    ports:
+      - 9411:9411
   base:
     build: .
-    image: mircoservice-lab_node:latest
+    image: mircoservice-lab_base:latest
     environment:
       - APPLICATION_PORT=9000
       - DATABASE_CLIENT=pg
@@ -19,18 +23,45 @@ services:
       - DATABASE_DATABASE=database
       - DATABASE_USERNAME=username
       - DATABASE_PASSWORD=password
+      - HTTP_LOGGER_ENDPOINT=http://zipkin:9411/api/v1/spans
     volumes:
       - .:/opt/microservice-lab
-  watch:
+  fetchme:
     extends: base
+    command: gulp pm2_up
+    environment:
+      - APPLICATION_PORT=9001
+      - SERVICE_NAME=RECEIVER
     ports:
-      - 9000:9000
-    command: npm run watch
+      - 9001:9001
     links:
       - postgres:postgres
+      - zipkin:zipkin
+  watch:
+    extends: base
+    command: gulp pm2_up
+    environment:
+      - FETCH_URL=http://fetchme:9001/api/pets/1
+      - SERVICE_NAME=CALLER
+    ports:
+      - 9000:9000
+    links:
+      - postgres:postgres
+      - zipkin:zipkin
+      - fetchme:fetchme
   test:
     extends: base
-    command: npm run dredd
+    command: gulp dredd_up
+    links:
+      - postgres:postgres
+  debug:
+    extends: base
+    command: node --debug=7000 ./dist/index.js
+    environment:
+      - APPLICATION_PORT=8000
+    ports:
+      - 8000:8000
+      - 7000:7000
     links:
       - postgres:postgres
   codegen:

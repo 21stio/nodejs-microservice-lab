@@ -14,7 +14,7 @@
   schemes: 
     - "http"
   consumes: 
-    - "application/json; charset=utf-8"
+    - "application/json"
   produces:
     - "application/json; charset=utf-8"
   paths: 
@@ -52,6 +52,53 @@
     /pets/{id}:
       get:
         description: Returns a user based on a single ID, if the user does not have access to the pet
+        parameters:
+          - name: id
+            in: path
+            description: ID of pet to fetch
+            required: true
+            x-example: 1
+            type: integer
+            format: int64
+        responses:
+          "200":
+            description: pet response
+            schema:
+              $ref: '#/definitions/GetPetResponse'
+          default:
+            description: unexpected error
+            schema:
+              $ref: '#/definitions/ErrorResponse'
+      put:
+        description: Updates a new pet in the store.  Duplicates are allowed
+        parameters:
+          - name: id
+            in: path
+            description: ID of pet to fetch
+            required: true
+            x-example: 1
+            type: integer
+            format: int64
+          - name: pet
+            in: body
+            description: Pet to update in the store
+            required: true
+            schema:
+              $ref: '#/definitions/CreatePetRequest'
+              example:
+                name: Walter
+                tag: dog
+        responses:
+          "200":
+            description: pet response
+            schema:
+              $ref: '#/definitions/GetPetResponse'
+          default:
+            description: unexpected error
+            schema:
+              $ref: '#/definitions/ErrorResponse'
+      delete:
+        description: Returns a user based on a single ID, if the user does not have access to the pet
         operationId: find pet by id
         parameters:
           - name: id
@@ -71,4 +118,4 @@
             schema:
               $ref: '#/definitions/ErrorResponse'
   definitions: 
-    $ref: swagger-definitions.yaml
+    $ref: swagger-definitions.yml

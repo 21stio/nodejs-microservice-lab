@@ -4,6 +4,7 @@ apps:
     instances: 1
     watch:
       - dist
+      - node_modules
       - swagger.yml
       - swagger-definitions.yml
     watch_options:

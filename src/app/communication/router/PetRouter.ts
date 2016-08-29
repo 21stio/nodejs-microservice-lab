@@ -16,23 +16,37 @@ export class PetRouter implements IRouter {
         return [
             {
                 method: "get",
-                path: "/api/pets/:id",
-                handler: function (data) {
-                    return self.petRepository.getPetById(data)
-                }
-            },
-            {
-                method: "get",
                 path: "/api/pets",
-                handler: function (data) {
+                handler: function () {
                     return self.petRepository.getPets()
                 }
             },
             {
                 method: "post",
                 path: "/api/pets",
-                handler: function (data) {
+                handler: function (id:number, data) {
                     return self.petRepository.createPet(data)
+                }
+            },
+            {
+                method: "get",
+                path: "/api/pets/:id",
+                handler: function (id:number) {
+                    return self.petRepository.getPetById(id)
+                }
+            },
+            {
+                method: "put",
+                path: "/api/pets/:id",
+                handler: function (id:number, data) {
+                    return self.petRepository.updatePet(id, data)
+                }
+            },
+            {
+                method: "delete",
+                path: "/api/pets/:id",
+                handler: function (id:number) {
+                    return self.petRepository.deletePet(id)
                 }
             }
         ]

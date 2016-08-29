@@ -3,11 +3,11 @@ import * as express from "express"
 import {IRouter} from "./IRouter";
 import {PersistenceResolver} from "../../persistence/PersistenceResolver";
 
-function attach(handler:(params:any) => Promise<any>) {
+function attach(handler:(id:number, params:any) => Promise<any>) {
     return function (request:express.Request, response:express.Response, next) {
-        handler(request.params).then(function (data) {
+        handler(request.params.id, request.body).then(function (data) {
             response.send(data)
-        })
+        });
     }
 }
 
