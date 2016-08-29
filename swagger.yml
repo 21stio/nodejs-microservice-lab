@@ -10,7 +10,7 @@
     license: 
       name: "MIT"
   host: "petstore.swagger.io"
-  basePath: "/api"
+  basePath: "/v1"
   schemes: 
     - "http"
   consumes: 

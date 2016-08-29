@@ -21,23 +21,23 @@ export abstract class ACommunicationResolver {
         this.persistenceResolver = persistenceResolver;
     }
 
-    attachRouters(application:express.Application) {
+    attachRouters(basePath: string, application:express.Application) {
         var self = this;
 
         for (let router of self.getRouters()) {
             for (let route of router.getRoutes()) {
                 switch (route.method) {
                     case "get":
-                        application.get(route.path, attach(route.handler));
+                        application.get(basePath + route.path, attach(route.handler));
                         break;
                     case "post":
-                        application.post(route.path, attach(route.handler));
+                        application.post(basePath + route.path, attach(route.handler));
                         break;
                     case "put":
-                        application.put(route.path, attach(route.handler));
+                        application.put(basePath + route.path, attach(route.handler));
                         break;
                     case "delete":
-                        application.delete(route.path, attach(route.handler));
+                        application.delete(basePath + route.path, attach(route.handler));
                         break;
                 }
             }

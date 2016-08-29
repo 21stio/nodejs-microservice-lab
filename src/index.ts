@@ -35,7 +35,7 @@ swaggerMiddleware('swagger.yml', app, function (err, middleware) {
 
     var dependencyResolver = new DependencyResolver(knexConfig);
 
-    dependencyResolver.getCommunicationResolver().attachRouters(app);
+    dependencyResolver.getCommunicationResolver().attachRouters('/v1', app);
 
 
     app.listen(process.env.APPLICATION_PORT, function () {
