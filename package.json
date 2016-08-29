@@ -9,15 +9,9 @@
   "dependencies": {
     "express": "^4.14.0",
     "knex": "^0.11.10",
-    "node-fetch": "^1.6.0",
     "pg": "^6.1.0",
     "pm2": "^1.1.3",
-    "swagger-express-middleware": "^1.0.0-alpha.12",
-    "zipkin": "^0.2.6",
-    "zipkin-context-cls": "^0.2.1",
-    "zipkin-instrumentation-express": "^0.2.6",
-    "zipkin-instrumentation-fetch": "^0.2.6",
-    "zipkin-transport-http": "^0.2.6"
+    "swagger-express-middleware": "^1.0.0-alpha.12"
   },
   "devDependencies": {
     "chai": "^3.5.0",
