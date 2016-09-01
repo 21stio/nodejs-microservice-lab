@@ -1,121 +1,97 @@
 ---
   swagger: "2.0"
+
   info: 
     version: "1.0.0"
     title: "Swagger Petstore"
-    description: "A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification"
-    termsOfService: "http://swagger.io/terms/"
-    contact: 
-      name: "Swagger API Team"
-    license: 
-      name: "MIT"
+
   host: "petstore.swagger.io"
   basePath: "/v1"
+
   schemes: 
     - "http"
   consumes: 
     - "application/json"
   produces:
     - "application/json; charset=utf-8"
+
+
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      x-example: 1
+      type: integer
+      format: int64
+    PetBodyRequest:
+      name: petBodyRequest
+      in: body
+      required: true
+      schema:
+        $ref: '#/definitions/IPetBodyRequest'
+        example:
+          name: Walter
+          tag: dog
+
+
+  responses:
+    MessageResponse:
+      description: message response
+      schema:
+        $ref: '#/definitions/IMessageResponse'
+    PetResponse:
+      description: pet response
+      schema:
+        $ref: '#/definitions/IPetResponse'
+    PetsResponse:
+      description: pets response
+      schema:
+        $ref: '#/definitions/IPetsResponse'
+
+
   paths: 
     /pets: 
-      get: 
-        description: "Returns all pets from the system that the user has access to"
+      get:
+        operationId: getPets
         responses: 
-          "200":
-            description: "A list of pets."
-            schema: 
-              type: "array"
-              items: 
-                $ref: "#/definitions/GetPetResponse"
+          200:
+            $ref: '#/responses/PetsResponse'
       post:
-        description: Creates a new pet in the store.  Duplicates are allowed
+        operationId: createPet
         parameters:
-          - name: pet
-            in: body
-            description: Pet to add to the store
-            required: true
-            schema:
-              $ref: '#/definitions/CreatePetRequest'
-              example:
-                name: Walter
-                tag: dog
+          - $ref: '#/parameters/PetBodyRequest'
         responses:
-          "200":
-            description: pet response
-            schema:
-              $ref: '#/definitions/GetPetResponse'
-          default:
-            description: unexpected error
-            schema:
-              $ref: '#/definitions/ErrorResponse'
+          200:
+            $ref: '#/responses/MessageResponse'
+
     /pets/{id}:
       get:
-        description: Returns a user based on a single ID, if the user does not have access to the pet
+        operationId: getPet
         parameters:
-          - name: id
-            in: path
-            description: ID of pet to fetch
-            required: true
+          - $ref: '#/parameters/Id'
             x-example: 1
-            type: integer
-            format: int64
         responses:
-          "200":
-            description: pet response
-            schema:
-              $ref: '#/definitions/GetPetResponse'
-          default:
-            description: unexpected error
-            schema:
-              $ref: '#/definitions/ErrorResponse'
+          200:
+            $ref: '#/responses/PetResponse'
       put:
-        description: Updates a new pet in the store.  Duplicates are allowed
+        operationId: updatePet
         parameters:
-          - name: id
-            in: path
-            description: ID of pet to fetch
-            required: true
-            x-example: 1
-            type: integer
-            format: int64
-          - name: pet
-            in: body
-            description: Pet to update in the store
-            required: true
-            schema:
-              $ref: '#/definitions/CreatePetRequest'
-              example:
-                name: Walter
-                tag: dog
+          - $ref: '#/parameters/Id'
+            x-example: 2
+          - $ref: '#/parameters/PetBodyRequest'
         responses:
-          "200":
-            description: pet response
-            schema:
-              $ref: '#/definitions/GetPetResponse'
-          default:
-            description: unexpected error
-            schema:
-              $ref: '#/definitions/ErrorResponse'
+          200:
+            $ref: '#/responses/MessageResponse'
       delete:
-        description: Returns a user based on a single ID, if the user does not have access to the pet
-        operationId: find pet by id
+        operationId: deletePet
         parameters:
-          - name: id
-            in: path
-            description: ID of pet to fetch
-            required: true
-            x-example: 1
-            type: integer
-            format: int64
+          - $ref: '#/parameters/Id'
+            x-example: 3
         responses:
-          "200":
-            description: pet response
-            schema:
-              $ref: '#/definitions/GetPetResponse'
-          default:
-            description: unexpected error
-            schema:
-              $ref: '#/definitions/ErrorResponse'
-  definitions: 
+          200:
+            $ref: '#/responses/MessageResponse'
+
+
+  definitions:
     $ref: swagger-definitions.yml

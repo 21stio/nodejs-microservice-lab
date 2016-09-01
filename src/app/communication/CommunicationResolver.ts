@@ -1,5 +1,5 @@
-import {ACommunicationResolver} from "./abstract/ACommunicationResolver";
-import {IRouter} from "./abstract/IRouter";
+import {ACommunicationResolver} from "../../framework/communication/ACommunicationResolver";
+import {IRouter} from "../../framework/communication/IRouter";
 import {PetRouter} from "./router/PetRouter";
 
 export class CommunicationResolver extends ACommunicationResolver {

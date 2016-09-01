@@ -1,0 +1,12 @@
+var tjs = require('typescript-json-schema').TJS;
+
+tjs.exec('./src/app/communication/Contracts.ts', 'IRender', {
+    useRef: true,
+    useTypeAliasRef: false,
+    useRootRef: true,
+    useTitle: false,
+    useDefaultProperties: false,
+    disableExtraProperties: true,
+    usePropertyOrder: false,
+    generateRequired: true
+});

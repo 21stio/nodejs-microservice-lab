@@ -1,35 +1,38 @@
-import * as Knex from "knex"
 import * as Promise from "bluebird"
-import {ARepository} from "../abstract/ARepository";
-import * as Contracts from "../../Contracts";
+import {ARepository} from "../../../framework/persistence/ARepository";
+import * as Pet from "../entity/Pet";
 
 export class PetRepository extends ARepository {
 
-    protected tableName = 'pets';
-
-    getPetById(id: number):Promise<any> {
-        return this.getAdapter().where('id', id).then(function (data) {
-            return data[0]
-        });
+    protected getTableName(): string {
+        return 'pets'
     }
 
-    getPets():Promise<[any]> {
+    getPetById(id: number):Promise<any> {
+        var self = this;
+
+        return this.getAdapter().where('id', id).then(self.handleGetById);
+    }
+
+    getPets():Promise<Pet.IPet> {
         return this.getAdapter().select();
     }
 
-    createPet(data:Contracts.CreatePet) {
-        return this.getAdapter().insert(data);
-    }
-
-    updatePet(id: number, data:Contracts.UpdatePet) {
-        return this.getAdapter().where('id', id).update(data).then(function (data) {
-            return {'yo': 'nice'};
+    createPet(petBody:Pet.IPetBody) {
+        return this.getAdapter().insert(petBody).then(function (data) {
+            return true;
         });
     }
 
-    deletePet(id:number ) {
-        return this.getAdapter().where('id', id).del().then(function (data) {
-            return {'yo': 'nice'};
-        });
+    updatePet(id: number, petBody:Pet.IPetBody) {
+        var self = this;
+
+        return this.getAdapter().where('id', id).update(petBody).then(self.handleUpdateById);
+    }
+
+    deletePet(id:number) {
+        var self = this;
+
+        return this.getAdapter().where('id', id).del().then(self.handleDeleteById);
     }
 }

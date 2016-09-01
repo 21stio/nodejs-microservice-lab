@@ -6,7 +6,7 @@ var yaml = require('yamljs');
 var concat = require('gulp-concat');
 
 gulp.task('typson', function () {
-    gulp.src('./src/app/Contracts.ts')
+    gulp.src('./src/app/communication/Contracts.ts')
         .pipe(data(function (file) {
             return typson.schema(file.path)
                 .done(function (schema) {

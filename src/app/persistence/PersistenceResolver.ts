@@ -1,29 +1,13 @@
-import * as Knex from "knex"
 import {PetRepository} from "./repository/PetRepository";
+import {APersistenceResolver} from "../../framework/persistence/APersistenceResolver";
 
-export class PersistenceResolver {
+export class PersistenceResolver extends APersistenceResolver {
 
-    protected knex:Knex = null;
-    protected knexConfig:Knex.Config = null;
-    protected petRepository:PetRepository = null;
-
-    constructor(knexConfig:Knex.Config) {
-        this.knexConfig = knexConfig;
-    }
-
-    protected getKnex():Knex {
+    getPetRepository():PetRepository {
         var self = this;
 
-        if (self.knex == null) {
-            self.knex = Knex(self.knexConfig);
-        }
-
-        return self.knex;
-    }
-
-    getPetRepository() {
-        var self = this;
-
-        return new PetRepository(self.getKnex());
+        return self.cache(function () {
+            return new PetRepository(self.getKnex());
+        });
     }
 }

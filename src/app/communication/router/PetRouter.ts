@@ -1,6 +1,6 @@
-import {IRouter} from "../abstract/IRouter";
+import {IRouter} from "../../../framework/communication/IRouter";
 import {PetRepository} from "../../persistence/repository/PetRepository";
-import {IRoute} from "../abstract/IRoute";
+import {IRoute} from "../../../framework/communication/IRoute";
 
 export class PetRouter implements IRouter {
 
@@ -10,41 +10,45 @@ export class PetRouter implements IRouter {
         this.petRepository = petRepository;
     }
 
+    getPath():string {
+        return "/pets";
+    }
+
     getRoutes():[IRoute] {
         var self = this;
 
         return [
             {
                 method: "get",
-                path: "/pets",
+                path: "",
                 handler: function () {
                     return self.petRepository.getPets()
                 }
             },
             {
                 method: "post",
-                path: "/pets",
+                path: "",
                 handler: function (id:number, data) {
                     return self.petRepository.createPet(data)
                 }
             },
             {
                 method: "get",
-                path: "/pets/:id",
+                path: "/:id",
                 handler: function (id:number) {
                     return self.petRepository.getPetById(id)
                 }
             },
             {
                 method: "put",
-                path: "/pets/:id",
+                path: "/:id",
                 handler: function (id:number, data) {
                     return self.petRepository.updatePet(id, data)
                 }
             },
             {
                 method: "delete",
-                path: "/pets/:id",
+                path: "/:id",
                 handler: function (id:number) {
                     return self.petRepository.deletePet(id)
                 }

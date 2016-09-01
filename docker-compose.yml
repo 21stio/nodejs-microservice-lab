@@ -12,35 +12,38 @@ services:
     build: .
     image: mircoservice-lab_base:latest
     environment:
-      - APPLICATION_PORT=9000
+      - LOG_LEVEL=info
+      - ZIPKIN_RECODER=console
+      - SERVICE_PORT=9000
+      - SERVICE_NAME=petstore
       - DATABASE_CLIENT=pg
       - DATABASE_HOST=postgres
       - DATABASE_PORT=5432
       - DATABASE_DATABASE=database
       - DATABASE_USERNAME=username
       - DATABASE_PASSWORD=password
+      - STRINGIFY_LOGS=true
     volumes:
       - .:/opt/microservice-lab
-  watch:
+  development:
     extends: base
-    command: gulp pm2_up
+    command: gulp nodemon_development_up
+    environment:
+      - NODE_ENV=development
+      - APPLICATION_DEBUG_PORT=7000
+      - STRINGIFY_LOGS=false
     ports:
       - 9000:9000
+      - 7000:7000
     links:
       - postgres:postgres
   test:
     extends: base
     command: gulp dredd_up
-    links:
-      - postgres:postgres
-  debug:
-    extends: base
-    command: node --debug=7000 ./dist/index.js
     environment:
-      - APPLICATION_PORT=8000
-    ports:
-      - 8000:8000
-      - 7000:7000
+      - ZIPKIN_RECODER=mute
+      - STRINGIFY_LOGS=false
+      - LOG_LEVEL=error
     links:
       - postgres:postgres
   codegen:

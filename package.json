@@ -8,10 +8,17 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.14.0",
+    "express-winston": "^2.0.0",
+    "swagger-express-middleware": "^1.0.0-alpha.12",
     "knex": "^0.11.10",
     "pg": "^6.1.0",
-    "pm2": "^1.1.3",
-    "swagger-express-middleware": "^1.0.0-alpha.12"
+    "nodemon": "^1.10.2",
+    "winston": "^2.2.0",
+    "zipkin": "^0.2.6",
+    "zipkin-context-cls": "^0.2.1",
+    "zipkin-instrumentation-express": "^0.2.6",
+    "zipkin-instrumentation-fetch": "^0.2.6",
+    "zipkin-transport-http": "^0.2.6"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -21,7 +28,9 @@
     "gulp-shell": "^0.5.2",
     "mocha": "^3.0.2",
     "require-dir": "^0.3.0",
-    "typson": "^0.6.0",
+    "tslint": "^3.15.1",
+    "typescript": "^1.8.10",
+    "typescript-json-schema": "^0.1.1",
     "yamljs": "^0.2.8"
   }
 }
