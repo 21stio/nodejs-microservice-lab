@@ -3,7 +3,7 @@ import * as express from "express";
 import * as swaggerMiddleware from "swagger-express-middleware";
 import * as Contracts from "../framework/communication/Contracts";
 
-var expressWinston = require('express-winston');
+let expressWinston = require("express-winston");
 
 export class MiddlewareResolver {
 
@@ -11,16 +11,16 @@ export class MiddlewareResolver {
     protected winstonTransports:[winston.TransportInstance] = null;
     protected zipkinMiddleware = null;
 
-    constructor(router:express.Router, winstonTransports:[winston.TransportInstance], zipkinMiddleware) {
+    constructor (router:express.Router, winstonTransports:[winston.TransportInstance], zipkinMiddleware) {
         this.router = router;
         this.winstonTransports = winstonTransports;
         this.zipkinMiddleware = zipkinMiddleware;
     }
 
-    attachMiddleware(application: express.Application){
-        var self = this;
+    attachMiddleware (application:express.Application) {
+        let self = this;
 
-        swaggerMiddleware('swagger.yml', application, function (err, middleware) {
+        swaggerMiddleware("swagger.yml", application, function (err, middleware) {
             application.use(
                 middleware.metadata(),
                 middleware.CORS(),
@@ -37,8 +37,8 @@ export class MiddlewareResolver {
 
             application.use(
                 self.getErrorLogger(),
-                function(error:Error, request: express.Request, response:express.Response, next:() => void) {
-                    var feedback:Contracts.IMessageResponse = {
+                function (error:Error, request:express.Request, response:express.Response, next:() => void) {
+                    let feedback:Contracts.IMessageResponse = {
                         success: false,
                         message: error.message
                     };
@@ -49,18 +49,18 @@ export class MiddlewareResolver {
         });
     }
 
-    protected getRequestLogger() {
-        var self = this;
+    protected getRequestLogger () {
+        let self = this;
 
-        expressWinston.requestWhitelist.push('body');
+        expressWinston.requestWhitelist.push("body");
 
         return expressWinston.logger({
             transports: self.winstonTransports
         });
     }
 
-    protected getErrorLogger() {
-        var self = this;
+    protected getErrorLogger () {
+        let self = this;
 
         return expressWinston.errorLogger({
             transports: self.winstonTransports

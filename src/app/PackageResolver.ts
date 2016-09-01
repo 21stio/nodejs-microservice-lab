@@ -1,22 +1,22 @@
-import * as winston from "winston"
-const {Tracer} = require('zipkin');
+import * as winston from "winston";
+const {Tracer} = require("zipkin");
 import {ConfigurationResolver} from "./configuration/ConfigurationResolver";
-const CLSContext = require('zipkin-context-cls');
-const zipkinMiddleware = require('zipkin-instrumentation-express').expressMiddleware;
+const CLSContext = require("zipkin-context-cls");
+const zipkinMiddleware = require("zipkin-instrumentation-express").expressMiddleware;
 
 export class PackageResolver {
 
     protected configurationResolver:ConfigurationResolver = null;
-    protected logger: winston.LoggerInstance = null;
+    protected logger:winston.LoggerInstance = null;
     protected zipkinTracer = null;
     protected zipkinMiddleware = null;
 
-    constructor(configurationResolver:ConfigurationResolver) {
+    constructor (configurationResolver:ConfigurationResolver) {
         this.configurationResolver = configurationResolver;
     }
 
-    getLogger():winston.LoggerInstance {
-        var self = this;
+    getLogger ():winston.LoggerInstance {
+        let self = this;
 
         if (self.logger == null) {
             self.logger = new (winston.Logger)({
@@ -27,24 +27,23 @@ export class PackageResolver {
         return self.logger;
     }
 
-    getTracer() {
-        var self = this;
+    getTracer () {
+        let self = this;
 
         if (self.zipkinTracer == null) {
             self.zipkinTracer = new Tracer({
                 recorder: self.configurationResolver.getZipkinRecorder(),
-                ctxImpl: new CLSContext('zipkin')
+                ctxImpl: new CLSContext("zipkin")
             });
         }
 
         return self.zipkinTracer;
     }
 
-    getZipkinMiddleware() {
-        var self = this;
+    getZipkinMiddleware () {
+        let self = this;
 
-        if (self.zipkinMiddleware == null)
-        {
+        if (self.zipkinMiddleware == null) {
             self.zipkinMiddleware = zipkinMiddleware(
                 self.getTracer(),
                 self.configurationResolver.getServiceConfig().name,
