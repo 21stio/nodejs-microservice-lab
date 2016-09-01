@@ -1,4 +1,4 @@
  node ('master'){
-  stage 'Build and Test'
-  sh 'echo "Yo"'
+  stage 'Lint'
+  sh 'docker-compose run test gulp tslint'
  }
