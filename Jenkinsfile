@@ -5,5 +5,5 @@
   sh 'docker-compose build base'
 
   stage 'Lint'
-  sh 'docker-compose run test gulp tslint'
+  sh 'docker-compose up test'
  }
