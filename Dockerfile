@@ -9,4 +9,6 @@ RUN npm install -g gulp
 
 WORKDIR /opt/microservice-lab
 
+COPY . .
+
 RUN npm install
