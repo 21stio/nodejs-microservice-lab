@@ -23,14 +23,14 @@ services:
       - DATABASE_PASSWORD=password
       - STRINGIFY_LOGS=true
 
-  build-databse:
+  build-database:
     extends: base-database
     ports:
       - 5432
   build-application:
     extends: base-application
     links:
-      - build-databse:database
+      - build-database:database
     environment:
       - ZIPKIN_RECODER=mute
       - STRINGIFY_LOGS=false

@@ -3,7 +3,7 @@ node ('infrastructure'){
 
   try {
     stage 'Setup'
-    sh 'docker-compose up -d build-database --remove-orphans'
+    sh 'docker-compose up -d --remove-orphans build-database'
     sleep 10
 
     stage 'Build'
