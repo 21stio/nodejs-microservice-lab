@@ -16,6 +16,7 @@ node ('infrastructure'){
     sh 'docker-compose run build-application dredd_up'
   } finally {
     stage 'Teardown'
+    sh 'docker-compose stop'
     sh 'docker-compose rm --force -v'
   }
 }
