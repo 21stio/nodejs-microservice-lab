@@ -42,7 +42,7 @@ services:
       - 5432:5432
   development-application:
     extends: base-application
-    command: gulp nodemon_development_up
+    command: gulp nodemon_development
     environment:
       - NODE_ENV=development
       - APPLICATION_DEBUG_PORT=7000

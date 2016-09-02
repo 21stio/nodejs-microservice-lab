@@ -10,19 +10,19 @@ RUN npm install -g pm2
 
 WORKDIR /opt/microservice-lab
 
-COPY ./typings.json ./typings.json
-RUN typings install
-
 COPY ./package.json ./package.json
 RUN npm install
 
+COPY ./typings.json ./typings.json
+RUN typings install
+
+COPY ./src ./src
 COPY ./gulp ./gulp
 COPY ./gulpfile.js ./gulpfile.js
 COPY ./tsconfig.json ./tsconfig.json
 RUN gulp transpile
 
 COPY ./swagger.yml ./swagger.yml
-COPY ./src ./src
 RUN gulp typescript-json-schema
 
 COPY ./tslint.json ./tslint.json
