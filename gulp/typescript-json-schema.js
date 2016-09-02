@@ -22,7 +22,7 @@ gulp.task('typescript-json-schema', function () {
             }
         }
 
-        removeMeta(schema)
+        removeMeta(schema);
 
         fs.writeFileSync('./swagger-definitions.yml', yaml.stringify(schema, 10, 2).replace(/#\/definitions/g, '#'));
     });
