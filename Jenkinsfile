@@ -12,7 +12,7 @@ node ('infrastructure'){
     sh 'docker-compose up -d --remove-orphans build-database'
     sh 'docker-compose run build-application gulp seed'
 
-    stage 'test communication'
+    stage 'test http interface'
     sh 'docker-compose run build-application gulp dredd'
   } finally {
     stage 'Teardown'
