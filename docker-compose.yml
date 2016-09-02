@@ -1,7 +1,7 @@
 version: '2'
 services:
 
-  base-postgres:
+  base-database:
     image: postgres
     environment:
       - POSTGRES_USER=username
@@ -16,28 +16,28 @@ services:
       - SERVICE_PORT=9000
       - SERVICE_NAME=petstore
       - DATABASE_CLIENT=pg
-      - DATABASE_HOST=postgres
+      - DATABASE_HOST=database
       - DATABASE_PORT=5432
       - DATABASE_DATABASE=database
       - DATABASE_USERNAME=username
       - DATABASE_PASSWORD=password
       - STRINGIFY_LOGS=true
 
-  build-postgres:
-    extends: base-postgres
+  build-databse:
+    extends: base-database
     ports:
       - 5432
   build-application:
     extends: base-application
     links:
-      - build-postgres:postgres
+      - build-databse:database
     environment:
       - ZIPKIN_RECODER=mute
       - STRINGIFY_LOGS=false
       - LOG_LEVEL=error
 
-  development-postgres:
-    extends: base-postgres
+  development-database:
+    extends: base-database
     ports:
       - 5432:5432
   development-application:
@@ -51,7 +51,7 @@ services:
       - 9000:9000
       - 7000:7000
     links:
-      - development-postgres:postgres
+      - development-database:database
 
   codegen:
     build:
