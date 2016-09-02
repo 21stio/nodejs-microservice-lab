@@ -23,8 +23,6 @@ services:
       - DATABASE_USERNAME=username
       - DATABASE_PASSWORD=password
       - STRINGIFY_LOGS=true
-    volumes:
-      - .:/opt/microservice-lab
   development:
     extends: base
     command: gulp nodemon_development_up

@@ -14,6 +14,7 @@
     "pg": "^6.1.0",
     "nodemon": "^1.10.2",
     "winston": "^2.2.0",
+    "meld": "^1.3.2",
     "zipkin": "^0.2.6",
     "zipkin-context-cls": "^0.2.1",
     "zipkin-instrumentation-express": "^0.2.6",

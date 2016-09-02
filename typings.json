@@ -9,8 +9,9 @@
     "knex": "registry:dt/knex#0.0.0+20160819212955",
     "mime": "registry:dt/mime#0.0.0+20160316155526",
     "mocha": "registry:dt/mocha#2.2.5+20160720003353",
-    "node": "registry:dt/node#6.0.0+20160826120425",
+    "node": "registry:dt/node#6.0.0+20160831021119",
     "serve-static": "registry:dt/serve-static#0.0.0+20160606155157",
-    "swagger-express-middleware": "registry:dt/swagger-express-middleware#1.0.0+20160514155812"
+    "swagger-express-middleware": "registry:dt/swagger-express-middleware#1.0.0+20160514155812",
+    "winston": "registry:dt/winston#0.0.0+20160417152829"
   }
 }

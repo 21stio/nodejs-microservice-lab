@@ -31,7 +31,7 @@ export class MiddlewareResolver {
 
             application.use(
                 self.getRequestLogger(),
-                self.zipkinMiddleware,
+                // self.zipkinMiddleware,
                 self.router
             );
 
