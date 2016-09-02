@@ -9,6 +9,6 @@ node ('infrastructure'){
     sh 'docker-compose run build-application gulp tslint'
   } finally {
     stage 'Teardown'
-    docker-compose rm -f -a
+    sh 'docker-compose rm -f -a'
   }
 }
