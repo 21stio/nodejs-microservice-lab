@@ -15,7 +15,7 @@ node ('infrastructure'){
     stage 'test http interface'
     sh 'docker-compose run build-application gulp dredd'
   } finally {
-    stage 'Teardown'
+    stage 'teardown'
     sh 'docker-compose stop'
     sh 'docker-compose rm --all --force -v'
   }
