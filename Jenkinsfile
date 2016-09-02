@@ -3,7 +3,7 @@ node ('infrastructure'){
 
   try {
     stage 'Setup'
-    sh 'docker-compose up -d build-database'
+    sh 'docker-compose up -d build-database --remove-orphans'
     sleep 10
 
     stage 'Build'
@@ -16,6 +16,6 @@ node ('infrastructure'){
     sh 'docker-compose run build-application dredd_up'
   } finally {
     stage 'Teardown'
-    sh 'docker-compose rm -f -a'
+    sh 'docker-compose rm --force -v'
   }
 }
