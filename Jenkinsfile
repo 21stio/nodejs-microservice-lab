@@ -10,12 +10,11 @@ node ('infrastructure'){
 
     stage 'database setup'
     sh 'docker-compose up -d --remove-orphans build-database'
-    sleep 10
+    sleep 20
     sh 'docker-compose run build-application gulp knex_up'
 
     stage 'test communication'
     sh 'docker-compose run build-application gulp dredd'
-
   } finally {
     stage 'Teardown'
     sh 'docker-compose stop'
