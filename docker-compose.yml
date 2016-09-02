@@ -1,14 +1,13 @@
 version: '2'
 services:
-  postgres:
+
+  base-postgres:
     image: postgres
-    ports:
-      - 5432:5432
     environment:
       - POSTGRES_USER=username
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=database
-  base:
+  base-application:
     build: .
     image: mircoservice-lab_base:latest
     environment:
@@ -23,6 +22,20 @@ services:
       - DATABASE_USERNAME=username
       - DATABASE_PASSWORD=password
       - STRINGIFY_LOGS=true
+
+  build-postgres:
+    extends: base-postgres
+    ports:
+      - 5432
+  build-application:
+    extends: base-application
+    links:
+      - build-postgres:postgres
+    environment:
+      - ZIPKIN_RECODER=mute
+      - STRINGIFY_LOGS=false
+      - LOG_LEVEL=error
+
   development:
     extends: base
     command: gulp nodemon_development_up

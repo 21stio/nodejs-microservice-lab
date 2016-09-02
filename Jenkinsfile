@@ -3,12 +3,12 @@ node ('infrastructure'){
 
   try {
     stage 'Build'
-    sh 'docker-compose build base'
+    sh 'docker-compose build base-application'
 
     stage 'Lint'
-    sh 'docker-compose up test'
+    sh 'docker-compose run build-application gulp tslint'
   } finally {
-    stage 'Lint'
-    sh 'docker-compose up test'
+    stage 'Teardown'
+    docker-compose rm -f -a
   }
 }
