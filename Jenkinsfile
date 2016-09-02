@@ -13,10 +13,10 @@ node ('infrastructure'){
     sh 'docker-compose run build-application gulp tslint'
 
     stage 'Test communication'
-    sh 'docker-compose run build-application dredd_up'
+    sh 'docker-compose run build-application gulp dredd_up'
   } finally {
     stage 'Teardown'
     sh 'docker-compose stop'
-    sh 'docker-compose rm --force -v'
+    sh 'docker-compose rm --all --force -v'
   }
 }
