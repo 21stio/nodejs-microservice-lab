@@ -47,6 +47,8 @@ services:
       - NODE_ENV=development
       - APPLICATION_DEBUG_PORT=7000
       - STRINGIFY_LOGS=false
+    volumes:
+      - .:/opt/microservice-lab
     ports:
       - 9000:9000
       - 7000:7000
