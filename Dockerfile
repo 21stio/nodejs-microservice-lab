@@ -7,6 +7,7 @@ RUN npm install -g dredd
 RUN npm install -g typings
 RUN npm install -g gulp
 RUN npm install -g pm2
+RUN npm install -g mocha
 
 WORKDIR /opt/microservice-lab
 
