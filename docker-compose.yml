@@ -36,8 +36,12 @@ services:
       - STRINGIFY_LOGS=false
       - LOG_LEVEL=error
 
-  development:
-    extends: base
+  development-postgres:
+    extends: base-postgres
+    ports:
+      - 5432:5432
+  development-application:
+    extends: base-application
     command: gulp nodemon_development_up
     environment:
       - NODE_ENV=development
@@ -47,16 +51,8 @@ services:
       - 9000:9000
       - 7000:7000
     links:
-      - postgres:postgres
-  test:
-    extends: base
-    command: gulp dredd_up
-    environment:
-      - ZIPKIN_RECODER=mute
-      - STRINGIFY_LOGS=false
-      - LOG_LEVEL=error
-    links:
-      - postgres:postgres
+      - development-postgres:postgres
+
   codegen:
     build:
       context: .
