@@ -1,10 +1,12 @@
 import * as Knex from "knex";
-import * as winston from "winston"
+import * as Winston from "winston"
 
 import {knexConfig} from "./configuration/knex";
 import {winstonTranstports} from "./configuration/winston";
 import {zipkinRecorder} from "./configuration/zipkin";
 import {serviceConfig} from "./configuration/service";
+
+let yaml = require('yamljs');
 
 export class ConfigurationResolver {
 
@@ -16,12 +18,16 @@ export class ConfigurationResolver {
         return serviceConfig;
     }
 
-    getWinstonTransports():[winston.TransportInstance] {
+    getWinstonTransports():[Winston.TransportInstance] {
         return winstonTranstports;
     }
 
     getZipkinRecorder() {
         return zipkinRecorder;
+    }
+
+    getEntitySchema(name: string) {
+        return yaml.load('swagger-definitions.yml')[name];
     }
 
 }

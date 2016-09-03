@@ -31,6 +31,7 @@
     "mocha": "^3.0.2",
     "require-dir": "^0.3.0",
     "tslint": "^3.15.1",
+    "tv4": "^1.2.7",
     "typescript": "^1.8.10",
     "typescript-json-schema": "^0.1.1",
     "yamljs": "^0.2.8"
