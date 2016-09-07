@@ -27,7 +27,7 @@ node ('infrastructure'){
     stage 'push'
     sh 'docker push ${REGISTRY_HOST}:${REGISTRY_PORT}/nodejs'
 
-    sh 'deploy'
+    stage 'deploy'
     sh 'ansible-playbook /infrastructure/ansible/role.yml -i /infrastructure/ansible/hosts/$ENV_ENVIRONMENT -e "HOST=infrastructure00" -e "ROLE=$(pwd)/ansible/rokes/deploy"'
   } finally {
     stage 'teardown'
