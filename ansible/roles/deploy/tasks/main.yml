@@ -30,3 +30,6 @@
       POSTGRES_USER: "{{ services.microservice_lab_postgres.username }}"
       POSTGRES_PASSWORD: "{{ services.microservice_lab_postgres.password }}"
       POSTGRES_DB: "{{ services.microservice_lab_postgres.database }}"
+
+- name: database migrated
+  shell: "docker exec {{ services.microservice_lab.service_name }} gulp migrate"
