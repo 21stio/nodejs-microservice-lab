@@ -7,6 +7,7 @@ node ('infrastructure'){
 
     stage 'database setup'
     sh 'docker-compose up -d --remove-orphans build-database'
+    sleep 3
     sh 'docker-compose run build-application gulp seed'
 
     stage 'test integration'
