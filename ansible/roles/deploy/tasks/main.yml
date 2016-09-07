@@ -1,3 +1,9 @@
+- name: logged in to docker registry
+  shell: "docker login --username {{ roles.nginx.htpasswd.username }} --password {{ roles.nginx.htpasswd.password }} {{ hosts.registry }}"
+
+- name: microservice-lab image pulled
+  shell: "docker pull {{ hosts.registry }}/microservice-lab:latest"
+
 - name: microservice-lab container is running
   docker:
     image: "{{ hosts.registry }}/microservice-lab:latest"
