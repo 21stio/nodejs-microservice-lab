@@ -20,8 +20,11 @@ RUN typings install
 COPY ./src ./src
 COPY ./gulp ./gulp
 COPY ./gulpfile.js ./gulpfile.js
-COPY ./tsconfig.json ./tsconfig.json
+
+COPY ./tslint.json ./tslint.json
 RUN gulp lint
+
+COPY ./tsconfig.json ./tsconfig.json
 RUN gulp transpile
 
 COPY ./swagger.yml ./swagger.yml
