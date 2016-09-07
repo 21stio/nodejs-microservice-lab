@@ -10,5 +10,5 @@ services:
     service_port: 9000
     log_level: info
     zipkin_recorder: mute
-    stringify_logs: true
+    stringify_logs: "true"
     database_client: pg

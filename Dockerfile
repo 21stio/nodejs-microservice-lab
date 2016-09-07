@@ -30,4 +30,4 @@ RUN gulp transpile
 COPY ./swagger.yml ./swagger.yml
 RUN gulp typescript-json-schema
 
-CMD pm2 start --no-daemon ./dist/index.js > /dev/null
+CMD pm2 start --no-daemon ./dist/index.js
