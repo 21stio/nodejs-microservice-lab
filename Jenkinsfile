@@ -25,7 +25,7 @@ node ('infrastructure'){
     sh 'docker login --username ${REGISTRY_USERNAME} --password ${REGISTRY_PASSWORD} ${REGISTRY_HOST}:${REGISTRY_PORT}'
 
     stage 'push'
-    sh 'docker push ${REGISTRY_HOST}:${REGISTRY_PORT}/nodejs'
+    sh 'docker push ${REGISTRY_HOST}:${REGISTRY_PORT}/microservice-lab'
 
     stage 'deploy'
     sh 'ansible-playbook /infrastructure/ansible/role.yml -i /infrastructure/ansible/hosts/$ENV_ENVIRONMENT -e "HOST=infrastructure00" -e "ROLE=$(pwd)/ansible/roles/deploy"'
