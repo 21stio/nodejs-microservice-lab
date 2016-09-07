@@ -3,6 +3,11 @@ export interface IPetBody {
     tag?: string;
 }
 
-export interface IPet extends IPetBody {
+export interface IEntity {
+    created_at: string;
+    updated_at: string;
+}
+
+export interface IPet extends IPetBody, IEntity {
     id: number;
 }

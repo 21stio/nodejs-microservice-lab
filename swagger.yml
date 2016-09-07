@@ -70,7 +70,7 @@
         operationId: getPet
         parameters:
           - $ref: '#/parameters/Id'
-            x-example: 1
+            x-example: 5
         responses:
           200:
             $ref: '#/responses/PetResponse'
@@ -78,7 +78,7 @@
         operationId: updatePet
         parameters:
           - $ref: '#/parameters/Id'
-            x-example: 2
+            x-example: 5
           - $ref: '#/parameters/PetBodyRequest'
         responses:
           200:
@@ -87,7 +87,7 @@
         operationId: deletePet
         parameters:
           - $ref: '#/parameters/Id'
-            x-example: 3
+            x-example: 6
         responses:
           200:
             $ref: '#/responses/MessageResponse'
