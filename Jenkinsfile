@@ -19,7 +19,7 @@ node ('infrastructure'){
     sh 'docker-compose run build-application gulp test_http_interface'
 
     stage 'build'
-    sh 'docker build --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/microservice-lab --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/microservice-lab:latest --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/microservice-lab:$(date "+%d-%m-%Y_%H:%M:%S") .'
+    sh 'docker build --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/microservice_lab --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/microservice_lab:latest --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/microservice_lab:$(date "+%d/%m/%Y_%H:%M:%S") .'
 
     stage 'login to registry'
     sh 'docker login --username ${REGISTRY_USERNAME} --password ${REGISTRY_PASSWORD} ${REGISTRY_HOST}:${REGISTRY_PORT}'
