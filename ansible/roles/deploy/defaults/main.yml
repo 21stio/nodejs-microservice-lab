@@ -11,10 +11,4 @@ services:
     log_level: info
     zipkin_recorder: mute
     stringify_logs: true
-    database:
-      client: pg
-      host: "{{ service.microservice_lab_postgres.service_name }}"
-      port: "{{ service.microservice_lab_postgres.port }}"
-      database: "{{ service.microservice_lab_postgres.database }}"
-      username: "{{ service.microservice_lab_postgres.username }}"
-      password: "{{ service.microservice_lab_postgres.password }}"
+    database_client: pg
