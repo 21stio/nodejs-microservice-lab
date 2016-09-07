@@ -4,8 +4,8 @@ export interface IPetBody {
 }
 
 export interface IEntity {
-    created_at: number;
-    updated_at: number;
+    created_at: string;
+    updated_at: string;
 }
 
 export interface IPet extends IPetBody, IEntity {
