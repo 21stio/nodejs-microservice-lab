@@ -1,6 +1,6 @@
 services:
   microservice_lab_postgres:
-    service_name: microservice-lab_postgres
+    service_name: microservice-lab-postgres
     port: 5432
     database: microservice_lab
     username: peter
