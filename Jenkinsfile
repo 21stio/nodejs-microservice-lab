@@ -5,9 +5,6 @@ node ('infrastructure'){
     stage 'build'
     sh 'docker-compose build base-application'
 
-    stage 'lint'
-    sh 'docker-compose run build-application gulp tslint'
-
     stage 'database setup'
     sh 'docker-compose up -d --remove-orphans build-database'
     sh 'docker-compose run build-application gulp seed'

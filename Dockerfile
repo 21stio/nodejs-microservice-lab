@@ -21,6 +21,7 @@ COPY ./src ./src
 COPY ./gulp ./gulp
 COPY ./gulpfile.js ./gulpfile.js
 COPY ./tsconfig.json ./tsconfig.json
+RUN gulp lint
 RUN gulp transpile
 
 COPY ./swagger.yml ./swagger.yml
