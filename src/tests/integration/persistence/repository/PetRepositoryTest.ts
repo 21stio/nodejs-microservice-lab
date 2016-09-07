@@ -15,7 +15,8 @@ describe("PetRepository", function () {
             petRepository.createPet({name: "getPetById", tag: "getPetById"}).then(function (data) {
                 petRepository.getPets().then(function (pets: [Pet.IPet]) {
                     petRepository.getPetById(pets[0]['id']).then(function (pet: Pet.IPet) {
-                        Chai.assert.isTrue(tv4.validate(pet, configurationResolver.getEntitySchema('IPet')));
+                        Chai.assert.isTrue("name" in pet);
+                        Chai.assert.isTrue("tags" in pet);
 
                         done();
                     })
@@ -31,7 +32,8 @@ describe("PetRepository", function () {
 
                 for (let pet of pets) {
                     console.log(pet);
-                    Chai.assert.isTrue(tv4.validate(pet, configurationResolver.getEntitySchema('IPet')));
+                    Chai.assert.isTrue("name" in pet);
+                    Chai.assert.isTrue("tags" in pet);
 
                     if(pets.length == ++c) {
                         done();
@@ -73,8 +75,11 @@ describe("PetRepository", function () {
 
     describe("#deletePet()", function () {
         it("", function (done) {
+            petRepository.deletePet(1).then(function(result: boolean){
+                Chai.assert.isTrue(result);
 
-            done();
+                done();
+            });
         });
     });
 
