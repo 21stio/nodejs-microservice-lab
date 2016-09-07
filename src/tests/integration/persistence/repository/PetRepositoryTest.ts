@@ -15,8 +15,7 @@ describe("PetRepository", function () {
             petRepository.createPet({name: "getPetById", tag: "getPetById"}).then(function (data) {
                 petRepository.getPets().then(function (pets: [Pet.IPet]) {
                     petRepository.getPetById(pets[0]['id']).then(function (pet: Pet.IPet) {
-                        Chai.assert.isTrue("name" in pet);
-                        Chai.assert.isTrue("tag" in pet);
+                        Chai.assert.isTrue(tv4.validate(pet, configurationResolver.getEntitySchema('IPet')));
 
                         done();
                     })
@@ -32,8 +31,7 @@ describe("PetRepository", function () {
 
                 for (let pet of pets) {
                     console.log(pet);
-                    Chai.assert.isTrue("name" in pet);
-                    Chai.assert.isTrue("tag" in pet);
+                    Chai.assert.isTrue(tv4.validate(pet, configurationResolver.getEntitySchema('IPet')));
 
                     if(pets.length == ++c) {
                         done();
