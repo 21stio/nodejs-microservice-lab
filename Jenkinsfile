@@ -28,7 +28,7 @@ node ('infrastructure'){
     sh 'docker push ${REGISTRY_HOST}:${REGISTRY_PORT}/nodejs'
 
     stage 'deploy'
-    sh 'ansible-playbook /infrastructure/ansible/role.yml -i /infrastructure/ansible/hosts/$ENV_ENVIRONMENT -e "HOST=infrastructure00" -e "ROLE=$(pwd)/ansible/rokes/deploy"'
+    sh 'ansible-playbook /infrastructure/ansible/role.yml -i /infrastructure/ansible/hosts/$ENV_ENVIRONMENT -e "HOST=infrastructure00" -e "ROLE=$(pwd)/ansible/roles/deploy"'
   } finally {
     stage 'teardown'
     sh 'docker-compose stop'
