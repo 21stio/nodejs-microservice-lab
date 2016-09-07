@@ -1,0 +1,32 @@
+- name: microservice-lab container is running
+  docker:
+    image: "{{ hosts.registry }}"/microservice-lab:latest
+    name: "{{ services.microservice_lab.service_name }}"
+    restart_policy: unless-stopped
+    env:
+      SERVICE_TAGS: proxy_https
+      SERVICE_NAME: "{{ services.microservice_lab.service_name }}"
+      SERVICE_PORT: "{{ services.microservice_lab.service_port }}"
+      LOG_LEVEL: "{{ services.microservice_lab.log_level }}"
+      ZIPKIN_RECODER: "{{ services.microservice_lab.zipkin_recorder }}"
+      DATABASE_CLIENT: "{{ services.microservice_lab.database.client }}"
+      DATABASE_HOST: "{{ services.microservice_lab.database.host }}"
+      DATABASE_PORT: "{{ services.microservice_lab.database.port }}"
+      DATABASE_DATABASE: "{{ services.microservice_lab.database.database }}"
+      DATABASE_USERNAME: "{{ services.microservice_lab.database.username }}"
+      DATABASE_PASSWORD: "{{ services.microservice_lab.database.password }}"
+      STRINGIFY_LOGS: "{{ services.microservice_lab.database.stringify_logs }}"
+    links:
+      - "{{ services.microservice_lab_postgres.service_name }}"
+    ports:
+      - "{{ services.microservice_lab.service_port }}"
+
+- name: postgres container is running
+  docker:
+    image: postgres
+    name: "{{ services.microservice_lab_postgres.service_name }}"
+    restart_policy: unless-stopped
+    env:
+      POSTGRES_USER: "{{ services.microservice_lab_postgres.username }}"
+      POSTGRES_PASSWORD: "{{ services.microservice_lab_postgres.password }}"
+      POSTGRES_DB: "{{ services.microservice_lab_postgres.database }}"

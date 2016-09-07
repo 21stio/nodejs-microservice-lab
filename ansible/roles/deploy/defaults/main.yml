@@ -1,0 +1,20 @@
+services:
+  microservice_lab_postgres:
+    service_name: microservice-lab_postgres
+    port: 5432
+    database: microservice_lab
+    username: peter
+    password: peter123
+  microservice_lab:
+    service_name: microservice-lab
+    service_port: 9000
+    log_level: info
+    zipkin_recorder: mute
+    stringify_logs: true
+    database:
+      client: pg
+      host: "{{ service.microservice_lab_postgres.service_name }}"
+      port: "{{ service.microservice_lab_postgres.port }}"
+      database: "{{ service.microservice_lab_postgres.database }}"
+      username: "{{ service.microservice_lab_postgres.username }}"
+      password: "{{ service.microservice_lab_postgres.password }}"
