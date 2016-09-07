@@ -1,3 +1,13 @@
+- name: postgres container is running
+  docker:
+    image: postgres
+    name: "{{ services.microservice_lab_postgres.service_name }}"
+    restart_policy: unless-stopped
+    env:
+      POSTGRES_USER: "{{ services.microservice_lab_postgres.username }}"
+      POSTGRES_PASSWORD: "{{ services.microservice_lab_postgres.password }}"
+      POSTGRES_DB: "{{ services.microservice_lab_postgres.database }}"
+
 - name: logged in to docker registry
   shell: "docker login --username {{ roles.nginx.htpasswd.username }} --password {{ roles.nginx.htpasswd.password }} {{ hosts.registry }}"
 
@@ -26,16 +36,6 @@
       - "{{ services.microservice_lab_postgres.service_name }}"
     ports:
       - "{{ services.microservice_lab.service_port }}"
-
-- name: postgres container is running
-  docker:
-    image: postgres
-    name: "{{ services.microservice_lab_postgres.service_name }}"
-    restart_policy: unless-stopped
-    env:
-      POSTGRES_USER: "{{ services.microservice_lab_postgres.username }}"
-      POSTGRES_PASSWORD: "{{ services.microservice_lab_postgres.password }}"
-      POSTGRES_DB: "{{ services.microservice_lab_postgres.database }}"
 
 - name: database migrated
   shell: "docker exec {{ services.microservice_lab.service_name }} gulp migrate"
