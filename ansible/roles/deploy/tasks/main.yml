@@ -37,11 +37,11 @@
       DATABASE_PASSWORD: "{{ services.microservice_lab_postgres.password }}"
       STRINGIFY_LOGS: "{{ services.microservice_lab.stringify_logs }}"
     links:
-      - "{{ services.microservice_lab.service_name }}:{{ services.microservice_lab.service_name }}"
+      - "{{ services.microservice_lab_postgres.service_name }}:{{ services.microservice_lab_postgres.service_name }}"
     expose:
-      - "{{ services.microservice_lab.port }}"
+      - "{{ services.microservice_lab.service_port }}"
     ports:
-      - "{{ services.microservice_lab_postgres.port }}:{{ services.microservice_lab_postgres.port }}"
+      - "{{ services.microservice_lab.service_port }}:{{ services.microservice_lab.service_port }}"
     log_driver: syslog
     log_opt:
       tag: "{{ services.microservice_lab.service_name }}"
