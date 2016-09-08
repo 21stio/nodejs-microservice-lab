@@ -1,6 +1,6 @@
-import * as Promise from "bluebird"
 import * as express from "express"
 import {IRouter} from "./IRouter";
+import * as Promise from "bluebird";
 import {PersistenceResolver} from "../../app/persistence/PersistenceResolver";
 import {BusinessResolver} from "../../app/business/BusinessResolver";
 import  * as Contracts from "./Contracts";

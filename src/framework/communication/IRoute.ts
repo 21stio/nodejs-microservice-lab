@@ -1,4 +1,4 @@
-import * as Promise from "bluebird"
+import * as Promise from "bluebird";
 
 export interface IRoute {
     method:string;

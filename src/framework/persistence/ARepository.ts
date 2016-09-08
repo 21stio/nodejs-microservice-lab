@@ -1,5 +1,4 @@
 import * as Knex from "knex"
-import * as Promise from "bluebird"
 
 export abstract class ARepository {
 

@@ -22,6 +22,7 @@
     image: "{{ hosts.registry }}/microservice-lab:latest"
     name: "{{ services.microservice_lab.service_name }}"
     restart_policy: unless-stopped
+    state: restarted
     env:
       SERVICE_TAGS: proxy_https
       SERVICE_NAME: "{{ services.microservice_lab.service_name }}"
@@ -38,9 +39,9 @@
     links:
       - "{{ services.microservice_lab_postgres.service_name }}:{{ services.microservice_lab_postgres.service_name }}"
     expose:
-      - 9000
+      - "{{ services.microservice_lab_postgres.port }}"
     ports:
-      - 9000:9000
+      - "{{ services.microservice_lab_postgres.port }}:{{ services.microservice_lab_postgres.port }}"
     log_driver: syslog
     log_opt:
       tag: "{{ services.microservice_lab.service_name }}"
