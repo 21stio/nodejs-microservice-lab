@@ -37,6 +37,8 @@
       STRINGIFY_LOGS: "{{ services.microservice_lab.stringify_logs }}"
     links:
       - "{{ services.microservice_lab_postgres.service_name }}:{{ services.microservice_lab_postgres.service_name }}"
+    expose:
+      - 9000
     ports:
       - 9000:9000
     log_driver: syslog
