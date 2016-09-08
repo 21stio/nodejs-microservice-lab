@@ -27,6 +27,9 @@ node ('infrastructure'){
 
     stage 'deploy'
     sh 'ansible-playbook /infrastructure/ansible/role.yml -i /infrastructure/ansible/hosts/$ENV_ENVIRONMENT -e "HOST=application00" -e "ROLE=$(pwd)/ansible/roles/deploy"'
+
+    stage 'verify deployment'
+    sh 'ansible-playbook /infrastructure/ansible/role.yml -i /infrastructure/ansible/hosts/$ENV_ENVIRONMENT -e "HOST=application00" -e "ROLE=$(pwd)/ansible/roles/deploy/tests"'
   } finally {
     stage 'teardown'
     sh 'docker-compose stop'

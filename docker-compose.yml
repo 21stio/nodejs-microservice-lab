@@ -35,6 +35,8 @@ services:
       - ZIPKIN_RECODER=mute
       - STRINGIFY_LOGS=false
       - LOG_LEVEL=error
+    ports:
+      - 9000:9000
 
   development-database:
     extends: base-database

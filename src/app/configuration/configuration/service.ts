@@ -16,5 +16,5 @@ function getServicename():string {
 
 export var serviceConfig = {
     port: getServicePort(),
-    name: process.env.SERVICE_NAME
+    name: getServicename()
 };

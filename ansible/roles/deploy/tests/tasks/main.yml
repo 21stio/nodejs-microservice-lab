@@ -1,0 +1,42 @@
+- include: tasks/tests/docker_container_is_running.yml
+  vars:
+    container: "{{ services.microservice_lab_postgres.service_name }}"
+
+- include: tasks/tests/docker_container_is_running.yml
+  vars:
+    container: "{{ services.microservice_lab.service_name }}"
+
+- include: tasks/tests/consul_has_service_count.yml
+  vars:
+    service: "{{ services.microservice_lab_postgres.service_name }}"
+    count: 1
+
+- include: tasks/tests/consul_has_service_on_current_node.yml
+  vars:
+    service: "{{ services.microservice_lab_postgres.service_name }}"
+    port: "{{ services.microservice_lab_postgres.service_port }}"
+
+
+- include: tasks/tests/dns_has_host.yml
+  vars:
+    host: "{{ services.microservice_lab_postgres.service_name }}.{{ service_tld }}"
+
+- include: tasks/tests/http_has_ssl_enabled.yml
+  vars:
+    host: "{{ services.microservice_lab_postgres.service_name }}.{{ service_tld }}"
+
+- include: tasks/tests/http_internal_http-service_is_running.yml
+  vars:
+    host: "{{ services.microservice_lab_postgres.service_name }}.{{ service_tld }}"
+    uri: "/v1/pets"
+    contains: "success"
+
+- include: tasks/tests/http_local_http-service_is_running.yml
+  vars:
+    port: "{{ ports.local_reverse_proxy.jenkins_http }}"
+    uri: "/v1/pets"
+        contains: "success"
+
+- include: tasks/tests/http_has_basic_auth_enabled.yml
+  vars:
+    host: "{{ services.microservice_lab_postgres.service_name }}.{{ service_tld }}"
