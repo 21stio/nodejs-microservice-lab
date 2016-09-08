@@ -6,6 +6,7 @@
   vars:
     container: "{{ services.microservice_lab.service_name }}"
 
+
 - include: tasks/tests/consul_has_service_count.yml
   vars:
     service: "{{ services.microservice_lab_postgres.service_name }}"
@@ -21,6 +22,7 @@
   vars:
     host: "{{ services.microservice_lab_postgres.service_name }}.{{ service_tld }}"
 
+
 - include: tasks/tests/http_has_ssl_enabled.yml
   vars:
     host: "{{ services.microservice_lab_postgres.service_name }}.{{ service_tld }}"
@@ -35,7 +37,7 @@
   vars:
     port: "{{ ports.local_reverse_proxy.jenkins_http }}"
     uri: "/v1/pets"
-        contains: "success"
+    contains: "success"
 
 - include: tasks/tests/http_has_basic_auth_enabled.yml
   vars:
