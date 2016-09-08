@@ -8,8 +8,8 @@
       POSTGRES_PASSWORD: "{{ services.microservice_lab_postgres.password }}"
       POSTGRES_DB: "{{ services.microservice_lab_postgres.database }}"
     log_driver: syslog
-      log_opt:
-        tag: "{{ services.microservice_lab_postgres.service_name }}"
+    log_opt:
+      tag: "{{ services.microservice_lab_postgres.service_name }}"
 
 - name: logged in to docker registry
   shell: "docker login --username {{ roles.nginx.htpasswd.username }} --password {{ roles.nginx.htpasswd.password }} {{ hosts.registry }}"
