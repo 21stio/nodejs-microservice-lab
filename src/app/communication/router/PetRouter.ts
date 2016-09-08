@@ -1,14 +1,10 @@
 import {IRouter} from "../../../framework/communication/IRouter";
 import {PetRepository} from "../../persistence/repository/PetRepository";
 import {IRoute} from "../../../framework/communication/IRoute";
-import * as Promise from "bluebird";
 
 export class PetRouter implements IRouter {
 
-    protected petRepository:PetRepository = null;
-
-    constructor(petRepository:PetRepository) {
-        this.petRepository = petRepository;
+    constructor(protected petRepository:PetRepository) {
     }
 
     getPath():string {
@@ -19,15 +15,6 @@ export class PetRouter implements IRouter {
         var self = this;
 
         return [
-            {
-                method: "get",
-                path: "/foo",
-                handler: function () {
-                    return new Promise<string>(function (resolve) {
-                        resolve("bar");
-                    })
-                }
-            },
             {
                 method: "get",
                 path: "",
