@@ -18,13 +18,13 @@ node ('infrastructure'){
     sh 'make test_http_interface'
 
     stage 'build'
-    sh 'make build'
+    sh 'docker build --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/$(cat package.json | jq --raw-output ".name") --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/$(cat package.json | jq --raw-output ".name"):latest --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/$(cat package.json | jq --raw-output ".name"):$(date "+%d-%m-%Y_%H-%M-%S") .'
 
     stage 'login to registry'
     sh 'docker login --username ${REGISTRY_USERNAME} --password ${REGISTRY_PASSWORD} ${REGISTRY_HOST}:${REGISTRY_PORT}'
 
     stage 'push'
-    sh 'docker push ${REGISTRY_HOST}:${REGISTRY_PORT}/' + name
+    sh 'docker push ${REGISTRY_HOST}:${REGISTRY_PORT}/$(cat package.json | jq --raw-output ".name")'
 
     stage 'deploy'
     sh 'ansible-playbook /infrastructure/ansible/role.yml -i /infrastructure/ansible/hosts/${ENV_ENVIRONMENT} -e "HOST=${DEPLOYMENT_HOST}" -e "ROLE=$(pwd)/ansible/roles/deploy"'
