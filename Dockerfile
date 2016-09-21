@@ -9,7 +9,7 @@ RUN npm install -g gulp
 RUN npm install -g pm2
 RUN npm install -g mocha
 
-WORKDIR /opt/microservice-lab
+WORKDIR /opt/application
 
 COPY ./package.json ./package.json
 RUN npm install

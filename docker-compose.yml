@@ -50,7 +50,7 @@ services:
       - APPLICATION_DEBUG_PORT=7000
       - STRINGIFY_LOGS=false
     volumes:
-      - .:/opt/microservice-lab
+      - .:/opt/application
     ports:
       - 9000:9000
       - 7000:7000
@@ -62,6 +62,6 @@ services:
       context: .
       dockerfile: SwaggerCodegen.Dockerfile
     image: mircoservice-lab_swagger-codegen:latest
-    command: java -jar swagger-codegen-cli.jar generate -i /opt/microservice-lab/swagger.yml -l typescript-fetch -o /opt/microservice-lab/sdk
+    command: java -jar swagger-codegen-cli.jar generate -i /opt/application/swagger.yml -l typescript-fetch -o /opt/application/sdk
     volumes:
-      - .:/opt/microservice-lab
+      - .:/opt/application
