@@ -2,7 +2,7 @@ node ('infrastructure'){
   checkout scm
 
   try {
-  	name = sh(returnStdout: true, script: 'cat package.json | jq --raw-output ".name"')
+  	def name = sh(returnStdout: true, script: 'cat package.json | jq --raw-output ".name"')
 
     stage 'build'
     sh 'make build'
@@ -14,7 +14,6 @@ node ('infrastructure'){
 
     stage 'test integration'
     sh 'make test_integration'
-
     stage 'test http interface'
     sh 'make test_http_interface'
 
