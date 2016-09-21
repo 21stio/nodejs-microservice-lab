@@ -9,7 +9,6 @@ services:
       - POSTGRES_DB=database
   base-application:
     build: .
-    image: mircoservice-lab:latest
     environment:
       - LOG_LEVEL=info
       - ZIPKIN_RECODER=console
