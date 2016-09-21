@@ -5,18 +5,18 @@ node ('infrastructure'){
   	name = sh(returnStdout: true, script: 'cat package.json | jq --raw-output ".name"')
 
     stage 'build'
-    sh 'docker-compose build base-application'
+    sh 'make build'
 
     stage 'database setup'
     sh 'docker-compose up -d --remove-orphans build-database'
     sleep 10
-    sh 'docker-compose run build-application gulp seed'
+    sh 'make seed'
 
     stage 'test integration'
-    sh 'docker-compose run build-application gulp test_integration'
+    sh 'make test_integration'
 
     stage 'test http interface'
-    sh 'docker-compose run build-application gulp test_http_interface'
+    sh 'make test_http_interface'
 
     stage 'build'
     sh 'docker build --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/' + name + ' --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/' + name + ':latest --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/' + name + ':$(date "+%d-%m-%Y_%H-%M-%S") .'
