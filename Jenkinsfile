@@ -18,7 +18,7 @@ node ('infrastructure'){
     sh 'make test_http_interface'
 
     stage 'build'
-    sh 'docker build --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/' + name + ' --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/' + name + ':latest --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/' + name + ':$(date "+%d-%m-%Y_%H-%M-%S") .'
+    sh 'make build'
 
     stage 'login to registry'
     sh 'docker login --username ${REGISTRY_USERNAME} --password ${REGISTRY_PASSWORD} ${REGISTRY_HOST}:${REGISTRY_PORT}'
