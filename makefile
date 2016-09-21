@@ -1,7 +1,5 @@
-export NAME=$(cat package.json | jq --raw-output ".name")
-
 build:
-	docker build --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/${NAME} --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/${NAME}:latest --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/${NAME}:$(date "+%d-%m-%Y_%H-%M-%S") .
+	docker-compose build base-application
 
 play:
 	docker-compose run ${MAKE_ENVIRONMENT}-application node ./dist/playground.js
