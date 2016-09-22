@@ -57,10 +57,7 @@ services:
       - development-database:database
 
   codegen:
-    build:
-      context: .
-      dockerfile: SwaggerCodegen.Dockerfile
-    image: mircoservice-lab_swagger-codegen:latest
-    command: java -jar swagger-codegen-cli.jar generate -i /opt/application/swagger.yml -l typescript-fetch -o /opt/application/sdk
+    image: 21stio/swagger-codegen:latest
+    command: generate -i /opt/application/swagger.yml -l typescript-fetch -o /opt/application/sdk
     volumes:
       - .:/opt/application

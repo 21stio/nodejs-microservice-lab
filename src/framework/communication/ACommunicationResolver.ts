@@ -5,9 +5,9 @@ import  * as Contracts from "./Contracts";
 import {DependencyResolver} from "../../app/DependencyResolver";
 import {AResolver} from "../AResolver";
 
-function attach(handler:(id:number, params:any) => Promise<any>) {
+function attach(handler:(request: express.Request) => Promise<any>) {
     return function (request:express.Request, response:express.Response, next) {
-        handler(request.params.id, request.body).then(function (data) {
+        handler(request).then(function (data) {
             let resultResponse:Contracts.IDataResponse = {
                 success: true,
                 data: data
