@@ -55,9 +55,3 @@ services:
       - 7000:7000
     links:
       - development-database:database
-
-  codegen:
-    image: 21stio/swagger-codegen:latest
-    command: generate -i /opt/application/swagger.yml -l typescript-fetch -o /opt/application/sdk
-    volumes:
-      - .:/opt/application
