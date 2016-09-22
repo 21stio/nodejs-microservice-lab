@@ -1,9 +1,12 @@
 {
   "name": "microservice-lab",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "publish-please": "publish-please",
+    "prepublish": "publish-please guard"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
