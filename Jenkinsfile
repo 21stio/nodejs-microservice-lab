@@ -15,6 +15,9 @@ node ('infrastructure'){
     stage 'test http interface'
     sh 'make test_http_interface'
 
+		stage 'publish sdk'
+    sh 'make publish_sdk'
+
     stage 'build'
     sh 'docker build --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/$(cat package.json | jq --raw-output ".name") --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/$(cat package.json | jq --raw-output ".name"):latest --tag ${REGISTRY_HOST}:${REGISTRY_PORT}/$(cat package.json | jq --raw-output ".name"):$(date "+%d-%m-%Y_%H-%M-%S") .'
 

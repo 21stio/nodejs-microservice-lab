@@ -94,4 +94,66 @@
 
 
   definitions:
-    $ref: swagger-definitions.yml
+    IPetResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/definitions/IPet'
+        success:
+          type: boolean
+      additionalProperties: false
+      required:
+        - data
+        - success
+    IPet:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        tag:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      additionalProperties: false
+      required:
+        - id
+        - name
+        - created_at
+        - updated_at
+    IPetsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/definitions/IPet'
+        success:
+          type: boolean
+      additionalProperties: false
+      required:
+        - data
+        - success
+    IPetBodyRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        tag:
+          type: string
+      additionalProperties: false
+      required:
+        - name
+    IMessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        success:
+          type: boolean
+      additionalProperties: false
+      required:
+        - success
