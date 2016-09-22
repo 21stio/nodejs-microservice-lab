@@ -17,12 +17,10 @@ test_http_interface:
 	docker-compose run ${MAKE_ENVIRONMENT}-application gulp test_http_interface
 
 generate_sdk:
-	docker run -v $(shell pwd):/opt/application 21stio/swagger-codegen:latest generate -i /opt/application/swagger.yml -l typescript-fetch -o /opt/application/sdk
+	docker run -v $(shell pwd):/opt/application 21stio/swagger-codegen:latest generate --input-spec /opt/application/swagger.yml --lang typescript-fetch --output /opt/application/sdk --additional-properties npmName=$(shell cat package.json | jq --raw-output ".name")-sdk
 
-publish_sdk: generate_sdk
-	cd sdk && ./git_push.sh ${SDK_GITHUB_USER_ID} ${SDK_GITHUB_REPOSITORY_ID}
-
-abc:
+push_sdk: generate_sdk
+	cd sdk ;\
 	git init ;\
 	git add . ;\
 	git commit -m "update" ;\
