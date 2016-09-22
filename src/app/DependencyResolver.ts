@@ -12,31 +12,31 @@ export class DependencyResolver extends AResolver {
     getPersistenceResolver():PersistenceResolver {
         let self = this;
 
-        return self.cache(function () {
-            return new PersistenceResolver(self.getConfigurationResolver().getKnexConfig());
+        return self.cache("PersistenceResolver", function () {
+            return new PersistenceResolver(self);
         });
     }
 
     getCommunicationResolver():CommunicationResolver {
         let self = this;
 
-        return self.cache(function () {
-            return new CommunicationResolver(self.getPersistenceResolver(), self.getBusinessResolver());
+        return self.cache("CommunicationResolver", function () {
+            return new CommunicationResolver(self);
         });
     }
 
     getBusinessResolver():BusinessResolver {
         let self = this;
 
-        return self.cache(function () {
-            return new BusinessResolver(self.getPersistenceResolver());
+        return self.cache("BusinessResolver", function () {
+            return new BusinessResolver(self);
         });
     }
 
     getConfigurationResolver():ConfigurationResolver {
         let self = this;
 
-        return self.cache(function () {
+        return self.cache("ConfigurationResolver", function () {
             return new ConfigurationResolver();
         });
     }
@@ -44,15 +44,15 @@ export class DependencyResolver extends AResolver {
     getMiddlewareResolver():MiddlewareResolver {
         let self = this;
 
-        return self.cache(function () {
-            return new MiddlewareResolver(self.getCommunicationResolver().getRouter("/v1"), self.getConfigurationResolver().getWinstonTransports(), self.getPackageResolver().getZipkinMiddleware());
+        return self.cache("MiddlewareResolver", function () {
+            return new MiddlewareResolver(self);
         });
     }
 
     getAspectsResolver():AspectResolver {
         let self = this;
 
-        return self.cache(function () {
+        return self.cache("AspectResolver", function () {
             return new AspectResolver(self);
         });
     }
@@ -60,8 +60,8 @@ export class DependencyResolver extends AResolver {
     getPackageResolver():PackageResolver {
         let self = this;
 
-        return self.cache(function () {
-            return new PackageResolver(self.getConfigurationResolver());
+        return self.cache("PackageResolver", function () {
+            return new PackageResolver(self);
         });
     }
 }

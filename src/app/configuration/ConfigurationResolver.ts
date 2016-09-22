@@ -5,10 +5,11 @@ import {knexConfig} from "./configuration/knex";
 import {winstonTranstports} from "./configuration/winston";
 import {zipkinRecorder} from "./configuration/zipkin";
 import {serviceConfig} from "./configuration/service";
+import {AResolver} from "../../framework/AResolver";
 
 let yaml = require('yamljs');
 
-export class ConfigurationResolver {
+export class ConfigurationResolver extends AResolver {
 
     getKnexConfig():Knex.Config {
         return knexConfig;

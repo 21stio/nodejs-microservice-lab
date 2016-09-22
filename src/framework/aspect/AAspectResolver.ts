@@ -1,11 +1,10 @@
 import {DependencyResolver} from "../../app/DependencyResolver";
+import {AResolver} from "../AResolver";
 
-export abstract class AAspectResolver {
+export abstract class AAspectResolver extends AResolver {
 
-    protected dependencyResolver:DependencyResolver = null;
-
-    constructor(dependencyResolver:DependencyResolver) {
-        this.dependencyResolver = dependencyResolver;
+    constructor(protected dependencyResolver:DependencyResolver) {
+        super();
     }
 
     protected abstract getAspects();

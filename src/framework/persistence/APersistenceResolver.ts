@@ -1,21 +1,18 @@
 import * as Knex from "knex"
 import {AResolver} from "../AResolver";
+import {DependencyResolver} from "../../app/DependencyResolver";
 
 export abstract class APersistenceResolver extends AResolver {
 
-    protected knexConfig:Knex.Config = null;
-
-    constructor(knexConfig:Knex.Config) {
+    constructor(protected dependencyResolver: DependencyResolver) {
         super();
-
-        this.knexConfig = knexConfig;
     }
 
     protected getKnex():Knex {
         var self = this;
 
-        return self.cache(function () {
-           return Knex(self.knexConfig);
+        return self.cache("Knex", function () {
+           return Knex(self.dependencyResolver.getConfigurationResolver().getKnexConfig());
         });
     }
 }

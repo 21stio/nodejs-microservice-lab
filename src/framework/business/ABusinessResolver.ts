@@ -1,12 +1,9 @@
 import {AResolver} from "../AResolver";
-import {PersistenceResolver} from "../../app/persistence/PersistenceResolver";
+import {DependencyResolver} from "../../app/DependencyResolver";
 
 export abstract class ABusinessResolver extends AResolver {
 
-    protected persistenceResolver:PersistenceResolver = null;
-
-    constructor(persistenceResolver:PersistenceResolver) {
+    constructor(protected dependencyResolver: DependencyResolver) {
         super();
-        this.persistenceResolver = persistenceResolver;
     }
 }

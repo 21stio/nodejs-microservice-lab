@@ -1,15 +1,13 @@
 export abstract class AResolver {
-    protected objects = {};
+    protected objects:{[name: string]: any} = {};
 
-    protected cache (generateObject:() => any) {
+    protected cache (name: string, generateObject:() => any) {
         let self = this;
 
-        let object = generateObject();
-
-        if (!(object.constructor.name in self.objects)) {
-            self.objects[object.constructor.name] = object;
+        if (!(name in self.objects)) {
+            self.objects[name] = generateObject();
         }
 
-        return self.objects[object.constructor.name];
+        return self.objects[name];
     }
 }

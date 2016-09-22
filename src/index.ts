@@ -4,7 +4,7 @@ import {DependencyResolver} from "./app/DependencyResolver";
 
 let application = express();
 
-let dependencyResolver = new DependencyResolver()
+let dependencyResolver = new DependencyResolver();
 
 dependencyResolver.getMiddlewareResolver().attachMiddleware(application);
 

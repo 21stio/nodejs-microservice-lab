@@ -1,20 +1,15 @@
-import * as winston from "winston";
 import * as express from "express";
 import * as swaggerMiddleware from "swagger-express-middleware";
 import * as Contracts from "../framework/communication/Contracts";
+import {DependencyResolver} from "./DependencyResolver";
+import {AResolver} from "../framework/AResolver";
 
 let expressWinston = require("express-winston");
 
-export class MiddlewareResolver {
+export class MiddlewareResolver extends AResolver {
 
-    protected router:express.Router = null;
-    protected winstonTransports:[winston.TransportInstance] = null;
-    protected zipkinMiddleware = null;
-
-    constructor (router:express.Router, winstonTransports:[winston.TransportInstance], zipkinMiddleware) {
-        this.router = router;
-        this.winstonTransports = winstonTransports;
-        this.zipkinMiddleware = zipkinMiddleware;
+    constructor (protected dependencyResolver: DependencyResolver) {
+        super();
     }
 
     attachMiddleware (application:express.Application) {
@@ -31,8 +26,8 @@ export class MiddlewareResolver {
 
             application.use(
                 self.getRequestLogger(),
-                // self.zipkinMiddleware,
-                self.router
+                // self.dependencyResolver.getPackageResolver().getZipkinMiddleware()
+                self.dependencyResolver.getCommunicationResolver().getRouter("/v1")
             );
 
             application.use(
@@ -55,7 +50,7 @@ export class MiddlewareResolver {
         expressWinston.requestWhitelist.push("body");
 
         return expressWinston.logger({
-            transports: self.winstonTransports
+            transports: self.dependencyResolver.getConfigurationResolver().getWinstonTransports()
         });
     }
 
@@ -63,7 +58,7 @@ export class MiddlewareResolver {
         let self = this;
 
         return expressWinston.errorLogger({
-            transports: self.winstonTransports
+            transports: self.dependencyResolver.getConfigurationResolver().getWinstonTransports()
         });
     }
 }

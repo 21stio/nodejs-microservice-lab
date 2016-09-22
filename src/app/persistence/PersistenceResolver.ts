@@ -6,7 +6,7 @@ export class PersistenceResolver extends APersistenceResolver {
     getPetRepository():PetRepository {
         var self = this;
 
-        return self.cache(function () {
+        return self.cache("PetRepository", function () {
             return new PetRepository(self.getKnex());
         });
     }

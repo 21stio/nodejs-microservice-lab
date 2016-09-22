@@ -8,7 +8,7 @@ export class CommunicationResolver extends ACommunicationResolver {
         var self = this;
 
         return [
-            new PetRouter(self.persistenceResolver.getPetRepository())
+            new PetRouter(self.dependencyResolver.getPersistenceResolver().getPetRepository())
         ]
     }
 }

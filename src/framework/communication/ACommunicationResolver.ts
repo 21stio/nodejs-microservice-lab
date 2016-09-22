@@ -1,9 +1,9 @@
 import * as express from "express"
 import {IRouter} from "./IRouter";
 import * as Promise from "bluebird";
-import {PersistenceResolver} from "../../app/persistence/PersistenceResolver";
-import {BusinessResolver} from "../../app/business/BusinessResolver";
 import  * as Contracts from "./Contracts";
+import {DependencyResolver} from "../../app/DependencyResolver";
+import {AResolver} from "../AResolver";
 
 function attach(handler:(id:number, params:any) => Promise<any>) {
     return function (request:express.Request, response:express.Response, next) {
@@ -22,16 +22,12 @@ function attach(handler:(id:number, params:any) => Promise<any>) {
     }
 }
 
-export abstract class ACommunicationResolver {
+export abstract class ACommunicationResolver extends AResolver {
 
     protected abstract getRouters():[IRouter];
 
-    protected persistenceResolver:PersistenceResolver = null;
-    protected businessResolver:BusinessResolver = null;
-
-    constructor(persistenceResolver:PersistenceResolver, businessResolver:BusinessResolver) {
-        this.persistenceResolver = persistenceResolver;
-        this.businessResolver = businessResolver;
+    constructor (protected dependencyResolver: DependencyResolver) {
+        super();
     }
 
     getRouter(basePath: string): express.Router {

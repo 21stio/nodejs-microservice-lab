@@ -1,56 +1,46 @@
 import * as winston from "winston";
 const {Tracer} = require("zipkin");
-import {ConfigurationResolver} from "./configuration/ConfigurationResolver";
+import {AResolver} from "../framework/AResolver";
+import {DependencyResolver} from "./DependencyResolver";
 const CLSContext = require("zipkin-context-cls");
 const zipkinMiddleware = require("zipkin-instrumentation-express").expressMiddleware;
 
-export class PackageResolver {
+export class PackageResolver extends AResolver {
 
-    protected configurationResolver:ConfigurationResolver = null;
-    protected logger:winston.LoggerInstance = null;
-    protected zipkinTracer = null;
-    protected zipkinMiddleware = null;
-
-    constructor (configurationResolver:ConfigurationResolver) {
-        this.configurationResolver = configurationResolver;
+    constructor (protected dependencyResolver: DependencyResolver) {
+        super();
     }
 
     getLogger ():winston.LoggerInstance {
         let self = this;
 
-        if (self.logger == null) {
-            self.logger = new (winston.Logger)({
-                transports: self.configurationResolver.getWinstonTransports()
+        return self.cache("winston", function () {
+            return new (winston.Logger)({
+                transports: self.dependencyResolver.getConfigurationResolver().getWinstonTransports()
             });
-        }
-
-        return self.logger;
+        });
     }
 
     getTracer () {
         let self = this;
 
-        if (self.zipkinTracer == null) {
-            self.zipkinTracer = new Tracer({
-                recorder: self.configurationResolver.getZipkinRecorder(),
+        return self.cache("Tracer", function () {
+            return new Tracer({
+                recorder: self.dependencyResolver.getConfigurationResolver().getZipkinRecorder(),
                 ctxImpl: new CLSContext("zipkin")
             });
-        }
-
-        return self.zipkinTracer;
+        });
     }
 
     getZipkinMiddleware () {
         let self = this;
 
-        if (self.zipkinMiddleware == null) {
-            self.zipkinMiddleware = zipkinMiddleware(
+        return self.cache("ZipkinMiddleware", function () {
+            return zipkinMiddleware(
                 self.getTracer(),
-                self.configurationResolver.getServiceConfig().name,
-                self.configurationResolver.getServiceConfig().port
+                self.dependencyResolver.getConfigurationResolver().getServiceConfig().name,
+                self.dependencyResolver.getConfigurationResolver().getServiceConfig().port
             );
-        }
-
-        return self.zipkinMiddleware;
+        });
     }
 }
